@@ -174,6 +174,7 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;o
 .cf input,.cf textarea,.cf select{width:100%;padding:14px 18px;border:1.5px solid rgba(167,139,190,0.15);border-radius:var(--r);font-size:0.9rem;font-family:'DM Sans',sans-serif;background:#fff;color:var(--txt);transition:all 0.3s}
 .cf input:focus,.cf textarea:focus,.cf select:focus{outline:none;border-color:var(--lav);box-shadow:0 0 0 4px rgba(167,139,190,0.08)}
 .cf textarea{min-height:110px;resize:vertical}
+.cf select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238A7E74' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
 .ci{display:flex;flex-direction:column;gap:22px}
 .cii{display:flex;gap:16px;align-items:flex-start}
 .cic{width:48px;height:48px;border-radius:14px;background:#fff;box-shadow:var(--s1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.15rem}
@@ -217,10 +218,38 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;o
   .ec{flex-direction:column}.ed{flex-direction:row;gap:8px;padding:14px 20px;min-width:auto}
   .ni{height:60px}
   .sb-inner{grid-template-columns:1fr 1fr}
+  .pc{padding:28px 20px}
+  .fc p{font-size:0.9rem}
+  .hero h1{font-size:clamp(2rem,8vw,2.8rem)}
+  .hsub{font-size:clamp(0.95rem,3vw,1.15rem)}
+  .hc{padding:0 8px}
 }
+/* PASSWORD GATE */
+#gate{position:fixed;inset:0;z-index:10000;background:linear-gradient(170deg,#342548 0%,#1A1325 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;padding:32px}
+#gate.unlocked{display:none}
+#gate h2{font-family:'Playfair Display',serif;color:#fff;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:500;text-align:center}
+#gate p{color:rgba(255,255,255,0.5);font-size:0.88rem;text-align:center;max-width:360px;line-height:1.7}
+#gate input{padding:16px 24px;border:1.5px solid rgba(167,139,190,0.3);border-radius:100px;background:rgba(255,255,255,0.05);color:#fff;font-size:1rem;font-family:'DM Sans',sans-serif;text-align:center;width:300px;max-width:90vw;outline:none;transition:border-color 0.3s}
+#gate input:focus{border-color:var(--lav)}
+#gate input::placeholder{color:rgba(255,255,255,0.3)}
+#gate button{padding:14px 40px;border-radius:100px;background:var(--lav);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.3s}
+#gate button:hover{background:var(--lav-dp)}
+#gate .err{color:#e88;font-size:0.8rem;min-height:20px}
+#gate .logo-g{margin-bottom:8px;opacity:0.6}
 </style>
 </head>
 <body>
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <svg class="logo-g" viewBox="0 0 60 60" width="48" height="48" fill="none"><path d="M30 10c0 0-5 11-5 22s2.5 16 5 20c2.5-4 5-9 5-20S30 10 30 10z" fill="#A78BBE" opacity="0.45"/><path d="M30 52c0 0-8-2-14-10s-5-14-3-19" stroke="#DDD2EC" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M30 52c0 0 8-2 14-10s5-14 3-19" stroke="#DDD2EC" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+  <h2>The Broken Roots Foundation</h2>
+  <p>This site is currently under development. Enter the access password to continue.</p>
+  <input type="password" id="gatePw" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkGate()"/>
+  <button onclick="checkGate()">Enter</button>
+  <div class="err" id="gateErr"></div>
+</div>
+
 
 <!-- NAV -->
 <nav class="nav" id="nav">
@@ -464,6 +493,8 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').classList.t
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t){t.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('navLinks').classList.remove('open')}})});
 document.getElementById('mt').addEventListener('click',()=>{document.getElementById('navLinks').classList.toggle('open')});
 function sel(b){document.querySelectorAll('.dam').forEach(x=>x.classList.remove('on'));b.classList.add('on')}
+function checkGate(){var p=document.getElementById("gatePw").value;if(p==="Thompson-Edwards"){document.getElementById("gate").classList.add("unlocked");sessionStorage.setItem("brf_auth","1")}else{document.getElementById("gateErr").textContent="Incorrect password. Please try again.";document.getElementById("gatePw").value=""}}
+if(sessionStorage.getItem("brf_auth")==="1"){document.getElementById("gate").classList.add("unlocked")}
 </script>
 </body>
 </html>
