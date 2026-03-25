@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Broken Roots Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FDFBF9;--bg-warm:#F9F5F0;--bg-lav:#F3EEF8;--bg-lav2:#EAE2F3;
+  --lav:#A78BBE;--lav-mid:#C4B0D6;--lav-lt:#DDD2EC;--lav-wash:#F0EAF6;--lav-dp:#8B6EA8;
+  --gold:#C49A3C;--gold-s:#E8D5A8;--rose:#D4B0B0;
+  --txt:#2C2420;--txt2:#5A4E44;--txt3:#8A7E74;
+  --bdr:rgba(167,139,190,0.12);
+  --s1:0 1px 3px rgba(44,36,32,0.04),0 4px 16px rgba(44,36,32,0.04);
+  --s2:0 2px 8px rgba(44,36,32,0.04),0 8px 32px rgba(44,36,32,0.06);
+  --s3:0 4px 16px rgba(44,36,32,0.04),0 16px 48px rgba(44,36,32,0.08);
+  --r:14px;--rl:20px;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);line-height:1.72;font-size:16px}
+h1,h2,h3,h4{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-weight:500;line-height:1.2;color:var(--txt)}
+a{text-decoration:none;color:inherit}
+body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:0.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;background:rgba(253,251,249,0.85);backdrop-filter:blur(24px) saturate(1.4);border-bottom:1px solid var(--bdr);transition:all 0.4s var(--ease)}
+.nav.scrolled{box-shadow:0 1px 20px rgba(139,110,168,0.06)}
+.ni{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px}
+.nb{display:flex;align-items:center;gap:14px}
+.nb svg{width:36px;height:36px;flex-shrink:0}
+.nb span{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;letter-spacing:0.01em}
+.nl{display:flex;align-items:center;gap:4px}
+.nla{font-size:0.82rem;font-weight:500;color:var(--txt2);padding:8px 16px;border-radius:8px;transition:all 0.25s;letter-spacing:0.01em}
+.nla:hover{color:var(--lav-dp);background:rgba(167,139,190,0.07)}
+.ncta{margin-left:8px;padding:10px 26px !important;background:var(--lav);color:#fff !important;border-radius:100px;font-weight:600 !important;box-shadow:0 2px 12px rgba(167,139,190,0.25);transition:all 0.3s var(--ease)}
+.ncta:hover{background:var(--lav-dp);transform:translateY(-1px);box-shadow:0 4px 20px rgba(167,139,190,0.35)}
+.mt{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.mt span{display:block;width:20px;height:1.5px;background:var(--txt);margin:5px 0;border-radius:4px}
+
+/* BTN */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 34px;border-radius:100px;font-size:0.88rem;font-weight:600;font-family:'DM Sans',sans-serif;border:none;cursor:pointer;transition:all 0.35s var(--ease);letter-spacing:0.01em}
+.btn-l{background:var(--lav);color:#fff;box-shadow:0 2px 16px rgba(167,139,190,0.3)}
+.btn-l:hover{background:var(--lav-dp);transform:translateY(-2px);box-shadow:0 6px 28px rgba(167,139,190,0.35)}
+.btn-o{background:transparent;color:var(--txt);border:1.5px solid var(--bdr);box-shadow:var(--s1);backdrop-filter:blur(8px)}
+.btn-o:hover{border-color:var(--lav-mid);transform:translateY(-2px);box-shadow:var(--s2)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:140px 48px 120px}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 80% 60% at 25% 30%,rgba(167,139,190,0.14) 0%,transparent 70%),radial-gradient(ellipse 60% 50% at 75% 65%,rgba(196,176,214,0.1) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 50% 90%,rgba(212,176,176,0.08) 0%,transparent 50%),linear-gradient(180deg,var(--bg-lav) 0%,var(--bg) 55%,var(--bg-warm) 100%)}
+.hl{position:absolute;z-index:0;opacity:0.06}
+.hl1{top:20%;left:8%;width:1px;height:60%;background:var(--lav)}
+.hl2{top:15%;right:12%;width:1px;height:50%;background:var(--lav)}
+.hc{position:relative;z-index:1;max-width:720px}
+.hb{display:inline-flex;align-items:center;gap:8px;padding:6px 18px 6px 8px;border-radius:100px;background:rgba(167,139,190,0.08);border:1px solid rgba(167,139,190,0.12);font-size:0.75rem;font-weight:600;color:var(--lav-dp);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:32px;opacity:0;animation:rise 0.9s 0.1s var(--ease) forwards}
+.hbd{width:6px;height:6px;border-radius:50%;background:var(--lav);flex-shrink:0}
+.hero h1{font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:500;letter-spacing:-0.02em;margin-bottom:20px;opacity:0;animation:rise 0.9s 0.25s var(--ease) forwards}
+.hero h1 i{font-style:italic;color:var(--lav-dp)}
+.hsub{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.05rem,1.8vw,1.25rem);color:var(--txt2);font-weight:400;margin-bottom:44px;opacity:0;animation:rise 0.9s 0.4s var(--ease) forwards}
+.ha{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:0;animation:rise 0.9s 0.55s var(--ease) forwards}
+
+/* STATS BAR */
+.stats-bar{background:var(--bg-lav2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr)}
+.sb-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:0}
+.sb-item{text-align:center;padding:40px 20px;border-right:1px solid var(--bdr)}
+.sb-item:last-child{border-right:none}
+.sb-num{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:var(--lav-dp);line-height:1}
+.sb-label{font-size:0.78rem;color:var(--txt2);margin-top:8px;line-height:1.5;max-width:180px;margin-left:auto;margin-right:auto}
+.sb-src{font-size:0.62rem;color:var(--txt3);margin-top:4px;font-style:italic}
+
+/* SECTIONS */
+.sec{padding:110px 48px}
+.sec-inner{max-width:1100px;margin:0 auto}
+.stag{font-size:0.7rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--lav);margin-bottom:12px}
+.sttl{font-size:clamp(2rem,3.8vw,2.7rem);margin-bottom:16px;letter-spacing:-0.01em}
+.sdesc{font-size:0.95rem;color:var(--txt2);max-width:520px;line-height:1.8}
+.shdr{margin-bottom:56px}
+
+/* ABOUT */
+.about{background:var(--bg-lav)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.about-text p{color:var(--txt2);font-size:0.94rem;margin-bottom:18px;line-height:1.85}
+.fc{background:#fff;border-radius:var(--rl);padding:32px 28px;box-shadow:var(--s2);border-left:3px solid var(--lav);margin-top:28px}
+.fc p{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--txt);line-height:1.8;font-weight:400}
+.fc .fa{margin-top:14px;font-family:'DM Sans',sans-serif;font-style:normal;font-weight:700;font-size:0.72rem;color:var(--lav-dp);text-transform:uppercase;letter-spacing:0.1em}
+.pc{background:linear-gradient(155deg,var(--lav-wash) 0%,var(--bg-lav2) 100%);border-radius:var(--rl);padding:52px 40px;text-align:center;max-width:400px;width:100%;box-shadow:var(--s3);position:relative;overflow:hidden;margin:0 auto}
+.pc::before{content:'';position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:rgba(167,139,190,0.1)}
+.pc::after{content:'';position:absolute;bottom:-20px;left:-20px;width:80px;height:80px;border-radius:50%;background:rgba(196,154,60,0.06)}
+.pc blockquote{font-family:'Playfair Display',serif;font-size:1.45rem;font-style:italic;color:var(--txt);line-height:1.5;position:relative;z-index:1}
+.pc .pa{margin-top:20px;font-family:'DM Sans',sans-serif;font-size:0.72rem;color:var(--lav-dp);font-weight:700;text-transform:uppercase;letter-spacing:0.1em;position:relative;z-index:1}
+
+/* PROGRAMS */
+.programs{background:var(--bg)}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pgc{background:#fff;border-radius:var(--r);padding:36px 28px;box-shadow:var(--s1);transition:all 0.4s var(--ease);border:1px solid var(--bdr);position:relative;overflow:hidden}
+.pgc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--lav),var(--lav-mid));transform:scaleX(0);transform-origin:left;transition:transform 0.4s var(--ease)}
+.pgc:hover{transform:translateY(-4px);box-shadow:var(--s2)}
+.pgc:hover::before{transform:scaleX(1)}
+.pgi{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.35rem;background:var(--bg-lav)}
+.pgc h3{font-size:1.15rem;margin-bottom:8px}
+.pgc p{font-size:0.86rem;color:var(--txt2);line-height:1.75}
+
+/* HOW */
+.how{background:var(--bg-lav)}
+.hs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.hst{text-align:center;padding:40px 28px;background:#fff;border-radius:var(--r);box-shadow:var(--s1);border:1px solid var(--bdr)}
+.sn{width:48px;height:48px;border-radius:50%;background:var(--lav);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600}
+.hst h3{font-size:1.1rem;margin-bottom:8px}
+.hst p{font-size:0.86rem;color:var(--txt2);line-height:1.7}
+
+/* EVENTS */
+.events{background:var(--bg)}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ec{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--s1);display:flex;transition:all 0.35s var(--ease);border:1px solid var(--bdr)}
+.ec:hover{transform:translateY(-3px);box-shadow:var(--s2)}
+.ed{background:linear-gradient(160deg,var(--lav),var(--lav-dp));color:#fff;padding:24px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:88px}
+.ed .m{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;opacity:0.85}
+.ed .d{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:600;line-height:1}
+.eb{padding:22px 24px}
+.eb h3{font-size:1.05rem;margin-bottom:4px}
+.eb .em{font-size:0.75rem;color:var(--lav-dp);font-weight:600;margin-bottom:6px}
+.eb p{font-size:0.84rem;color:var(--txt2);line-height:1.65}
+
+/* BLOG */
+.blog{background:var(--bg-lav)}
+.bg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.bc{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--s1);transition:all 0.35s var(--ease);border:1px solid var(--bdr)}
+.bc:hover{transform:translateY(-3px);box-shadow:var(--s2)}
+.bi{height:160px;position:relative}
+.bi.i1{background:linear-gradient(135deg,var(--lav-wash),var(--bg-lav2))}
+.bi.i2{background:linear-gradient(135deg,var(--bg-lav2),rgba(212,176,176,0.25))}
+.bi.i3{background:linear-gradient(135deg,rgba(232,213,168,0.35),var(--lav-wash))}
+.bl{position:absolute;bottom:14px;left:14px;background:#fff;padding:4px 12px;border-radius:100px;font-size:0.68rem;font-weight:700;color:var(--lav-dp);text-transform:uppercase;letter-spacing:0.06em}
+.bt{padding:22px 24px}
+.bt h3{font-size:1.05rem;margin-bottom:8px;line-height:1.3}
+.bt p{font-size:0.84rem;color:var(--txt2);line-height:1.65}
+.bt .bm{margin-top:14px;font-size:0.72rem;color:var(--txt3);font-weight:600}
+
+/* DONATE */
+.donate{background:linear-gradient(170deg,#342548 0%,#231A30 50%,#1A1325 100%);color:#fff;text-align:center;position:relative;overflow:hidden}
+.donate::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(167,139,190,0.12),transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(196,154,60,0.06),transparent 50%)}
+.donate .sec-inner{position:relative;z-index:1}
+.da{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:36px 0 32px}
+.dam{background:rgba(255,255,255,0.05);border:1.5px solid rgba(167,139,190,0.3);color:#fff;padding:14px 30px;border-radius:var(--r);font-size:1.15rem;font-family:'Playfair Display',serif;font-weight:600;cursor:pointer;transition:all 0.3s var(--ease)}
+.dam:hover,.dam.on{background:var(--lav);border-color:var(--lav)}
+.dc{background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.1);color:#fff;padding:14px 20px;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:0.9rem;width:130px;text-align:center;outline:none}
+.dc::placeholder{color:rgba(255,255,255,0.3)}
+.dc:focus{border-color:var(--lav)}
+.di{display:flex;gap:48px;justify-content:center;flex-wrap:wrap;margin-top:48px}
+.dii{text-align:center}
+.dii .dv{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:600;color:var(--lav-lt)}
+.dii p{font-size:0.8rem;color:rgba(255,255,255,0.45);margin-top:4px;max-width:150px}
+
+/* VOLUNTEER */
+.vol{background:var(--bg)}
+.vg{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.vc{background:#fff;border-radius:var(--r);padding:32px 28px;box-shadow:var(--s1);border:1px solid var(--bdr);border-left:3px solid var(--lav);transition:all 0.3s var(--ease)}
+.vc:hover{box-shadow:var(--s2);transform:translateY(-2px)}
+.vc h3{font-size:1.1rem;margin-bottom:8px}
+.vc p{font-size:0.86rem;color:var(--txt2);line-height:1.7}
+.vt{display:inline-block;margin-top:14px;background:var(--bg-lav);color:var(--lav-dp);padding:4px 14px;border-radius:100px;font-size:0.7rem;font-weight:700}
+
+/* CONTACT */
+.contact{background:var(--bg-lav)}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.cf{display:flex;flex-direction:column;gap:18px}
+.cf label{display:block;font-size:0.73rem;font-weight:700;color:var(--txt3);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em}
+.cf input,.cf textarea,.cf select{width:100%;padding:14px 18px;border:1.5px solid rgba(167,139,190,0.15);border-radius:var(--r);font-size:0.9rem;font-family:'DM Sans',sans-serif;background:#fff;color:var(--txt);transition:all 0.3s}
+.cf input:focus,.cf textarea:focus,.cf select:focus{outline:none;border-color:var(--lav);box-shadow:0 0 0 4px rgba(167,139,190,0.08)}
+.cf textarea{min-height:110px;resize:vertical}
+.ci{display:flex;flex-direction:column;gap:22px}
+.cii{display:flex;gap:16px;align-items:flex-start}
+.cic{width:48px;height:48px;border-radius:14px;background:#fff;box-shadow:var(--s1);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.15rem}
+.cii h4{font-size:0.95rem;margin-bottom:2px}
+.cii p{font-size:0.86rem;color:var(--txt2)}
+
+/* FOOTER */
+.footer{background:#1A1325;color:rgba(255,255,255,0.5);padding:56px 48px 32px}
+.fi{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:40px}
+.footer-brand p{font-size:0.84rem;line-height:1.7;margin-top:12px}
+.fcol h5{font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--lav-lt);margin-bottom:18px}
+.fcol a{display:block;color:rgba(255,255,255,0.4);font-size:0.84rem;margin-bottom:10px;transition:color 0.2s}
+.fcol a:hover{color:var(--lav-lt)}
+.fb{max-width:1100px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;flex-wrap:wrap;gap:12px}
+
+/* ANIM */
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.rv{opacity:0;transform:translateY(28px);transition:all 0.8s var(--ease)}
+.rv.v{opacity:1;transform:none}
+.d1{transition-delay:0.08s}.d2{transition-delay:0.16s}.d3{transition-delay:0.24s}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.nav,.sec,.hero,.footer,.stats-bar{padding-left:32px;padding-right:32px}}
+@media(max-width:900px){
+  .about-grid,.cg,.vg{grid-template-columns:1fr}
+  .pg{grid-template-columns:1fr 1fr}.hs{grid-template-columns:1fr}
+  .eg,.bg{grid-template-columns:1fr}.fi{grid-template-columns:1fr 1fr}
+  .sb-inner{grid-template-columns:1fr 1fr}
+  .sb-item:nth-child(2){border-right:none}
+  .sb-item:nth-child(3),.sb-item:nth-child(4){border-top:1px solid var(--bdr)}
+}
+@media(max-width:700px){
+  .nl{display:none;position:fixed;inset:0;background:rgba(253,251,249,0.97);flex-direction:column;align-items:center;justify-content:center;gap:8px;backdrop-filter:blur(24px)}
+  .nl.open{display:flex;z-index:200}
+  .nla{font-size:1.1rem;padding:12px 20px}
+  .mt{display:block;z-index:300}
+  .pg{grid-template-columns:1fr}.fi{grid-template-columns:1fr}
+  .sec{padding:72px 20px}.hero{padding:120px 24px 80px}
+  .ec{flex-direction:column}.ed{flex-direction:row;gap:8px;padding:14px 20px;min-width:auto}
+  .ni{height:60px}
+  .sb-inner{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+<div class="ni">
+  <a href="#home" class="nb">
+    <svg viewBox="0 0 60 60" fill="none">
+      <path d="M30 10c0 0-5 11-5 22s2.5 16 5 20c2.5-4 5-9 5-20S30 10 30 10z" fill="#A78BBE" opacity="0.45"/>
+      <path d="M30 52c0 0-8-2-14-10s-5-14-3-19" stroke="#5A4E44" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M30 52c0 0 8-2 14-10s5-14 3-19" stroke="#5A4E44" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <circle cx="30" cy="20" r="4.5" fill="#D4B0B0" opacity="0.45"/>
+      <path d="M27.5 18.5c1.2-1 3.8-1 5 0" stroke="#A78BBE" stroke-width="1" fill="none"/>
+      <path d="M28 22c1 .8 3 .8 4 0" stroke="#A78BBE" stroke-width="1" fill="none"/>
+    </svg>
+    <span>The Broken Roots Foundation</span>
+  </a>
+  <div class="nl" id="navLinks">
+    <a href="#home" class="nla">Home</a>
+    <a href="#about" class="nla">About</a>
+    <a href="#programs" class="nla">Programs</a>
+    <a href="#gethelp" class="nla">Get Help</a>
+    <a href="#events" class="nla">Events</a>
+    <a href="#blog" class="nla">Blog</a>
+    <a href="#volunteer" class="nla">Volunteer</a>
+    <a href="#contact" class="nla">Contact</a>
+    <a href="#donate" class="nla ncta">Donate</a>
+  </div>
+  <button class="mt" id="mt" aria-label="Menu"><span></span><span></span><span></span></button>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+<div class="hero-bg"></div>
+<div class="hl hl1"></div>
+<div class="hl hl2"></div>
+<div class="hc">
+  <div class="hb"><span class="hbd"></span> Grief support for every age</div>
+  <h1>The Broken Roots<br><i>Foundation</i></h1>
+  <p class="hsub">Even when the roots are broken, we can still grow — together.</p>
+  <div class="ha">
+    <a href="#gethelp" class="btn btn-l">Find Support</a>
+    <a href="#programs" class="btn btn-o">Our Programs</a>
+  </div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about sec" id="about">
+<div class="sec-inner">
+<div class="about-grid">
+  <div>
+    <div class="stag rv">Our Story</div>
+    <h2 class="sttl rv">Why We're Here</h2>
+    <p class="rv" style="color:var(--txt2);font-size:0.94rem;margin-bottom:18px;line-height:1.85">Losing a parent or guardian is one of the most profound experiences a person can go through — whether you're 8, 28, or 58. For younger people, it can bring anxiety, financial hardship, and a loneliness that's hard to explain to peers who haven't been there. For adults, it can quietly reshape everything — your identity, your relationships, your sense of direction.</p>
+    <p class="rv" style="color:var(--txt2);font-size:0.94rem;margin-bottom:18px;line-height:1.85">The truth is, there's no right age to grieve and no timeline for healing. The Broken Roots Foundation was created to be a place for all of it — the young person figuring out life without their parent, and the grown adult who still reaches for the phone to call someone who's no longer there. This is a community for anyone who has lost a piece of their roots.</p>
+    <div class="fc rv">
+      <p>"In 2016, my four siblings and I lost our mother to cardiovascular heart disease. We had each other — and it was still one of the hardest things we've ever been through. That experience showed us something we'll never forget: everyone deserves a community when life falls apart. This foundation is that community. Whether you have people around you or no one at all, you belong here."</p>
+      <p class="fa">— The Founder</p>
+    </div>
+  </div>
+  <div class="rv">
+    <div class="pc">
+      <blockquote>"Even when the roots are broken, we can still grow — together."</blockquote>
+      <div class="pa">Our Promise</div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+<div class="sb-inner">
+  <div class="sb-item rv">
+    <div class="sb-num">6 Million</div>
+    <div class="sb-label">children in the U.S. will lose a parent or sibling before age 18</div>
+    <div class="sb-src">NACG / CBEM, 2025</div>
+  </div>
+  <div class="sb-item rv d1">
+    <div class="sb-num">1,089</div>
+    <div class="sb-label">children in the U.S. were newly bereaved every single day in 2022</div>
+    <div class="sb-src">New York Life Foundation, 2024</div>
+  </div>
+  <div class="sb-item rv d2">
+    <div class="sb-num">57%</div>
+    <div class="sb-label">say support from others faded within 3 months — though healing took an average of 6 years</div>
+    <div class="sb-src">New York Life Foundation, 2024</div>
+  </div>
+  <div class="sb-item rv d3">
+    <div class="sb-num">7–10%</div>
+    <div class="sb-label">of bereaved adults develop prolonged grief disorder, a condition recognized by the APA in 2022</div>
+    <div class="sb-src">APA / DSM-5-TR, 2024</div>
+  </div>
+</div>
+</div>
+
+<!-- PROGRAMS -->
+<section class="programs sec" id="programs">
+<div class="sec-inner">
+<div class="shdr">
+  <div class="stag rv">What We Do</div>
+  <h2 class="sttl rv">Our Programs</h2>
+  <p class="sdesc rv">Every person's grief is unique. We meet you where you are — whatever your age, wherever you are.</p>
+</div>
+<div class="pg">
+  <div class="pgc rv d1"><div class="pgi">💛</div><h3>Emotional Support</h3><p>One-on-one and group grief sessions with compassionate counselors and peers. Virtual and in-person options available.</p></div>
+  <div class="pgc rv d2"><div class="pgi">🤝</div><h3>Financial Assistance</h3><p>Help covering funeral costs, burial services, and related expenses so families can focus on healing.</p></div>
+  <div class="pgc rv d3"><div class="pgi">🌱</div><h3>Community</h3><p>Support groups, memorial gatherings, and a safe space to share your story and be heard by people who understand.</p></div>
+  <div class="pgc rv d1"><div class="pgi">🩷</div><h3>Therapy Access</h3><p>Connecting grieving individuals with licensed therapists and covering costs when we can.</p></div>
+  <div class="pgc rv d2"><div class="pgi">🧒</div><h3>Youth Programs</h3><p>Age-appropriate workshops and creative expression for children and teens processing the loss of a parent.</p></div>
+  <div class="pgc rv d3"><div class="pgi">🕊️</div><h3>Mentorship</h3><p>Pairing those who've walked through loss with those still finding their way — at any age.</p></div>
+</div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how sec" id="gethelp">
+<div class="sec-inner">
+<div class="shdr">
+  <div class="stag rv">Get Help</div>
+  <h2 class="sttl rv">How It Works</h2>
+</div>
+<div class="hs">
+  <div class="hst rv d1"><div class="sn">1</div><h3>Reach Out</h3><p>Contact us by form, phone, or email. There's no wrong time and no wrong age.</p></div>
+  <div class="hst rv d2"><div class="sn">2</div><h3>Get Matched</h3><p>We connect you with the right support — counselor, mentor, group, or financial aid.</p></div>
+  <div class="hst rv d3"><div class="sn">3</div><h3>Begin Healing</h3><p>Join our community. Healing isn't linear, but you don't have to do it alone.</p></div>
+</div>
+</div>
+</section>
+
+<!-- EVENTS -->
+<section class="events sec" id="events">
+<div class="sec-inner">
+<div class="shdr">
+  <div class="stag rv">Events</div>
+  <h2 class="sttl rv">Upcoming Gatherings</h2>
+</div>
+<div class="eg">
+  <div class="ec rv d1"><div class="ed"><span class="m">Apr</span><span class="d">12</span></div><div class="eb"><h3>Roots of Remembrance Walk</h3><div class="em">Saturday · 10 AM · Los Angeles, CA</div><p>A peaceful community walk honoring those we've lost.</p></div></div>
+  <div class="ec rv d2"><div class="ed"><span class="m">Apr</span><span class="d">26</span></div><div class="eb"><h3>Virtual Grief Circle</h3><div class="em">Saturday · 6 PM · Online (Zoom)</div><p>A safe space to share and listen — open to all ages, anywhere.</p></div></div>
+  <div class="ec rv d1"><div class="ed"><span class="m">May</span><span class="d">10</span></div><div class="eb"><h3>Mother's Day Healing Brunch</h3><div class="em">Sunday · 11 AM · Los Angeles, CA</div><p>For those who find Mother's Day difficult. Warm food, shared stories.</p></div></div>
+  <div class="ec rv d2"><div class="ed"><span class="m">Jun</span><span class="d">15</span></div><div class="eb"><h3>Art as Healing Workshop</h3><div class="em">Sunday · 2 PM · Virtual</div><p>Express grief through art and journaling. No experience needed.</p></div></div>
+</div>
+</div>
+</section>
+
+<!-- BLOG -->
+<section class="blog sec" id="blog">
+<div class="sec-inner">
+<div class="shdr">
+  <div class="stag rv">Stories</div>
+  <h2 class="sttl rv">From the Heart</h2>
+</div>
+<div class="bg">
+  <div class="bc rv d1"><div class="bi i1"><span class="bl">Personal Story</span></div><div class="bt"><h3>The First Holiday Without Her</h3><p>Surviving my first Thanksgiving without my mom — and learning to let people in.</p><div class="bm">5 min read</div></div></div>
+  <div class="bc rv d2"><div class="bi i2"><span class="bl">Resource</span></div><div class="bt"><h3>Supporting Someone Who's Lost a Parent</h3><p>A guide for friends, family, and coworkers on how to show up for someone who's grieving.</p><div class="bm">7 min read</div></div></div>
+  <div class="bc rv d3"><div class="bi i3"><span class="bl">Community</span></div><div class="bt"><h3>You Gave Me My Village Back</h3><p>A letter from someone who found us after losing his mother during the pandemic.</p><div class="bm">4 min read</div></div></div>
+</div>
+</div>
+</section>
+
+<!-- REALITY + DONATE -->
+<section class="donate sec" id="donate">
+<div class="sec-inner">
+  <div class="stag rv" style="color:var(--lav-lt)">Give</div>
+  <h2 class="sttl rv" style="color:#fff">Your Support Makes a Difference</h2>
+  <p class="rv" style="color:rgba(255,255,255,0.55);max-width:540px;margin:0 auto 40px;font-size:0.95rem;line-height:1.85">Donations help us provide therapy sessions, funeral and burial assistance, emergency essentials for grieving families, grief counseling for children, and community programs that remind people they're not alone.</p>
+  <div class="da rv">
+    <button class="dam" onclick="sel(this)">$25</button>
+    <button class="dam on" onclick="sel(this)">$50</button>
+    <button class="dam" onclick="sel(this)">$100</button>
+    <button class="dam" onclick="sel(this)">$250</button>
+    <input type="text" class="dc" placeholder="Custom $"/>
+  </div>
+  <a href="#" class="btn btn-l rv" style="padding:15px 48px">Donate Now</a>
+</div>
+</section>
+
+<!-- VOLUNTEER -->
+<section class="vol sec" id="volunteer">
+<div class="sec-inner">
+<div class="shdr">
+  <div class="stag rv">Join Us</div>
+  <h2 class="sttl rv">Be the Village</h2>
+</div>
+<div class="vg">
+  <div class="vc rv d1"><h3>Grief Mentor</h3><p>Share your experience with someone still finding their way. Training provided.</p><span class="vt">Virtual or In-Person</span></div>
+  <div class="vc rv d2"><h3>Event Volunteer</h3><p>Help organize walks, brunches, and gatherings in your city.</p><span class="vt">Flexible Schedule</span></div>
+  <div class="vc rv d1"><h3>Storytelling & Content</h3><p>Write blog posts, manage social media, or help families share their stories.</p><span class="vt">Remote</span></div>
+  <div class="vc rv d2"><h3>Fundraising</h3><p>Connect us with donors and help spread the word in your community.</p><span class="vt">Leadership</span></div>
+</div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact sec" id="contact">
+<div class="sec-inner">
+<div class="shdr">
+  <div class="stag rv">Contact</div>
+  <h2 class="sttl rv">We're Listening</h2>
+</div>
+<div class="cg">
+  <form class="cf rv" onsubmit="event.preventDefault();alert('Thank you for reaching out. We\'ll be in touch soon. 💛')">
+    <div><label>Name</label><input type="text" placeholder="Your name" required/></div>
+    <div><label>Email</label><input type="email" placeholder="you@email.com" required/></div>
+    <div><label>How can we help?</label><select><option>Emotional Support</option><option>Financial Assistance</option><option>Join a Support Group</option><option>Volunteer</option><option>Donate</option><option>Other</option></select></div>
+    <div><label>Message</label><textarea placeholder="Share what's on your heart."></textarea></div>
+    <button type="submit" class="btn btn-l" style="align-self:flex-start">Send Message</button>
+  </form>
+  <div class="ci rv">
+    <div class="cii"><div class="cic">📧</div><div><h4>Email</h4><p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e68e838a8a89a68494898d83889489899295808993888287928f8988c8899481">[email&#160;protected]</a></p></div></div>
+    <div class="cii"><div class="cic">📞</div><div><h4>Phone</h4><p>(XXX) XXX-XXXX</p></div></div>
+    <div class="cii"><div class="cic">📍</div><div><h4>Headquarters</h4><p>California</p></div></div>
+    <div class="cii"><div class="cic">📱</div><div><h4>Social</h4><p>@BrokenRootsFoundation</p></div></div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="fi">
+  <div class="footer-brand">
+    <strong style="color:var(--lav-lt);font-family:'Playfair Display',serif;font-size:1.1rem">The Broken Roots Foundation</strong>
+    <p>A 501(c)(3) nonprofit supporting anyone grieving the loss of a parent or guardian. Headquartered in California.</p>
+  </div>
+  <div class="fcol"><h5>Support</h5><a href="#gethelp">Get Help</a><a href="#programs">Programs</a><a href="#events">Events</a></div>
+  <div class="fcol"><h5>Engage</h5><a href="#donate">Donate</a><a href="#volunteer">Volunteer</a><a href="#blog">Stories</a></div>
+  <div class="fcol"><h5>Legal</h5><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#contact">Contact</a></div>
+</div>
+<div class="fb">
+  <span>© 2026 The Broken Roots Foundation. All rights reserved.</span>
+  <span style="color:rgba(255,255,255,0.35)">EIN: Pending · 501(c)(3)</span>
+</div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v')})},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>30)});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t){t.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('navLinks').classList.remove('open')}})});
+document.getElementById('mt').addEventListener('click',()=>{document.getElementById('navLinks').classList.toggle('open')});
+function sel(b){document.querySelectorAll('.dam').forEach(x=>x.classList.remove('on'));b.classList.add('on')}
+</script>
+</body>
+</html>
